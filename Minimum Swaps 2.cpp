@@ -1,0 +1,137 @@
+//https://www.hackerrank.com/challenges/minimum-swaps-2/problem
+//Problem Description here:
+
+My code: 
+
+int minimumSwaps(vector<int> arr) {
+map<int, int> arrMap;
+map<int, int> arrMap2;
+int z = 0;
+for(auto i : arr){
+    arrMap[i] = z;
+    arrMap2[z] = i;
+    z++;
+}
+z = 0;
+int swap = 0;
+for(int i = 0; i<arr.size(); i++){
+    if(arrMap[i+1] != i){
+        int ifNotWhatIs = arrMap[i+1];
+        int whatIsThereInActual = arrMap2[i];
+        arrMap[i+1] = i;
+        arrMap[whatIsThereInActual] = ifNotWhatIs;
+        arrMap2[i] = i+1;
+        arrMap2[ifNotWhatIs] = whatIsThereInActual;
+        swap++;
+    }
+}
+
+//Full driver code in comments:
+
+/**
+#include <bits/stdc++.h>
+
+using namespace std;
+
+vector<string> split_string(string);
+
+// Complete the minimumSwaps function below.
+int minimumSwaps(vector<int> arr) {
+map<int, int> arrMap;
+map<int, int> arrMap2;
+int z = 0;
+for(auto i : arr){
+    arrMap[i] = z;
+    arrMap2[z] = i;
+    z++;
+}
+z = 0;
+int swap = 0;
+for(int i = 0; i<arr.size(); i++){
+    if(arrMap[i+1] != i){
+        int ifNotWhatIs = arrMap[i+1];
+        int whatIsThereInActual = arrMap2[i];
+        arrMap[i+1] = i;
+        arrMap[whatIsThereInActual] = ifNotWhatIs;
+        arrMap2[i] = i+1;
+        arrMap2[ifNotWhatIs] = whatIsThereInActual;
+        swap++;
+    }
+}
+
+
+return swap;
+
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    int n;
+    cin >> n;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    string arr_temp_temp;
+    getline(cin, arr_temp_temp);
+
+    vector<string> arr_temp = split_string(arr_temp_temp);
+
+    vector<int> arr(n);
+
+    for (int i = 0; i < n; i++) {
+        int arr_item = stoi(arr_temp[i]);
+
+        arr[i] = arr_item;
+    }
+
+    int res = minimumSwaps(arr);
+
+    fout << res << "\n";
+
+    fout.close();
+
+    return 0;
+}
+
+vector<string> split_string(string input_string) {
+    string::iterator new_end = unique(input_string.begin(), input_string.end(), [] (const char &x, const char &y) {
+        return x == y and x == ' ';
+    });
+
+    input_string.erase(new_end, input_string.end());
+
+    while (input_string[input_string.length() - 1] == ' ') {
+        input_string.pop_back();
+    }
+
+    vector<string> splits;
+    char delimiter = ' ';
+
+    size_t i = 0;
+    size_t pos = input_string.find(delimiter);
+
+    while (pos != string::npos) {
+        splits.push_back(input_string.substr(i, pos - i));
+
+        i = pos + 1;
+        pos = input_string.find(delimiter, i);
+    }
+
+    splits.push_back(input_string.substr(i, min(pos, input_string.length()) - i + 1));
+
+    return splits;
+}
+**/
+/**
+You are given an unordered array consisting of consecutive integers  [1, 2, 3, ..., n] without any duplicates. You are allowed to swap any two elements. You need to find the minimum number of swaps required to sort the array in ascending order.
+For example, given the array  we perform the following steps:
+i   arr                         swap (indices)
+0   [7, 1, 3, 2, 4, 5, 6]   swap (0,3)
+1   [2, 1, 3, 7, 4, 5, 6]   swap (0,1)
+2   [1, 2, 3, 7, 4, 5, 6]   swap (3,4)
+3   [1, 2, 3, 4, 7, 5, 6]   swap (4,5)
+4   [1, 2, 3, 4, 5, 7, 6]   swap (5,6)
+5   [1, 2, 3, 4, 5, 6, 7]
+It took  swaps to sort the array.
+**/
